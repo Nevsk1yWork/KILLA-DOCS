@@ -7,36 +7,26 @@ export default defineConfig({
   cleanUrls: true,
 
   themeConfig: {
-    // верхнее меню
     nav: [
       { text: "Быстрый старт", link: "/start/quick-start" },
-      { text: "API", link: "/api/methods/README" },
+      { text: "API", link: "/api/methods/" },
       { text: "Примеры", link: "/examples/curl" }
     ],
 
-    // правое оглавление
     outline: { level: [2, 3] },
 
-    // поиск (локальный, без внешних сервисов)
-    search: { provider: "local" },
-
-    // левое меню
     sidebar: [
       {
         text: "🚀 СТАРТ",
         items: [
-          { text: "Введение", link: "/README" },
+          { text: "Введение", link: "/" },
           { text: "Быстрый старт", link: "/start/quick-start" }
         ]
       },
       {
         text: "🔑 API",
         items: [
-          { text: "Методы", link: "/api/methods/README" },
-          { text: "Dedicated", link: "/api/methods/dedicated" },
-          { text: "Premium", link: "/api/methods/premium" },
-          { text: "VPN", link: "/api/methods/vpn" },
-          { text: "Internal", link: "/api/methods/internal" },
+          { text: "Методы", link: "/api/methods/" },
           { text: "Авторизация", link: "/api/authorization" },
           { text: "Ошибки", link: "/api/errors" }
         ]
@@ -59,6 +49,8 @@ export default defineConfig({
           { text: "Поддержка", link: "/help/support" }
         ]
       }
-    ]
+    ],
+
+    search: { provider: "local" }
   }
 });
