@@ -1,0 +1,22 @@
+.kb-actions {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 0;
+  flex-wrap: wrap;
+}
+
+.kb-btn {
+  border: 1px solid var(--vp-c-divider);
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  color: var(--vp-c-text-1);
+  background: var(--vp-c-bg-soft);
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.kb-btn:hover { opacity: 0.9; }
+.kb-btn:active { opacity: 0.8; }
+
+.VPDoc .content-container { padding-top: 12px; }
