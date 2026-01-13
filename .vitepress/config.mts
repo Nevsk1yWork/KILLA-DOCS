@@ -65,10 +65,19 @@ export default defineConfig({
       {
         text: "🔑 API",
         items: [
-          { text: "Методы", link: "/api/methods/" }, // это api/methods/README.md
+          {
+            text: "Методы",
+            items: [
+              { text: "Обзор", link: "/api/methods/" },
+              { text: "Серверные", link: "/api/methods/dedicated" },
+              { text: "Премиум", link: "/api/methods/premium" },
+              { text: "VPN", link: "/api/methods/vpn" },
+              { text: "Служебные", link: "/api/methods/internal" }
+            ]
+          },
           { text: "Авторизация", link: "/api/authorization" },
-          { text: "Ошибки", link: "/api/errors" },
-        ],
+          { text: "Ошибки", link: "/api/errors" }
+        ]
       },
       {
         text: "💻 ПРИМЕРЫ",
