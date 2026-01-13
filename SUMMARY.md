@@ -17,11 +17,11 @@
 
 ## Примеры <a href="#examples" id="examples"></a>
 
-* [curl](examples/curl.md)
-* [python](examples/python.md)
-* [nodejs](examples/nodejs.md)
-* [go](examples/go.md)
-* [php](examples/php.md)
+* [cURL](examples/curl.md)
+* [Python](examples/python.md)
+* [Node.js](examples/nodejs.md)
+* [Go](examples/go.md)
+* [PHP](examples/php.md)
 
 ## 🔗 Полезное <a href="#help" id="help"></a>
 
