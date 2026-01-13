@@ -6,7 +6,6 @@ function cfRedirectsPlugin() {
   return {
     name: "cf-pages-redirects",
     closeBundle() {
-      // Cloudflare Pages поддерживает файл _redirects в корне build output
       const outDir = path.resolve(process.cwd(), ".vitepress", "dist");
       const redirects = [
         // категории -> первая реальная страница
@@ -35,10 +34,9 @@ export default defineConfig({
   description: "Документация KILLA PROXY API",
   cleanUrls: true,
 
-  // Ключевое: переписываем пути так, чтобы README.md не появлялся в URL
   rewrites: {
-    "README.md": "index.md", // / -> корневой README.md
-    "api/methods/README.md": "api/methods/index.md", // /api/methods/ -> README.md
+    "README.md": "index.md",
+    "api/methods/README.md": "api/methods/index.md",
   },
 
   vite: {
@@ -66,9 +64,8 @@ export default defineConfig({
         text: "🔑 API",
         items: [
           {
-            text: "Методы",
+            text: "Методы", link: "/api/methods/"
             items: [
-              { text: "Обзор", link: "/api/methods/" },
               { text: "Серверные", link: "/api/methods/dedicated" },
               { text: "Премиум", link: "/api/methods/premium" },
               { text: "VPN", link: "/api/methods/vpn" },
