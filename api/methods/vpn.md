@@ -29,7 +29,7 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/quote?period=1" \
 curl -s https://proxy.killa.cc/api/v1/vpn/buy \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"period":1}'
+  -d '{"period_months":1}'
 ```
 
 ## 3) Продлить
@@ -40,7 +40,7 @@ curl -s https://proxy.killa.cc/api/v1/vpn/buy \
 curl -s https://proxy.killa.cc/api/v1/vpn/renew \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"period":1}'
+  -d '{"period_months":1}'
 ```
 
 ## 4) Получить текущую информацию
@@ -51,5 +51,3 @@ curl -s https://proxy.killa.cc/api/v1/vpn/renew \
 curl -s https://proxy.killa.cc/api/v1/vpn/info \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
-
-> Формат и поля результата смотри в OpenAPI Reference: `https://proxy.killa.cc/api/v1/openapi.json`.

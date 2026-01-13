@@ -84,5 +84,3 @@ curl -s https://proxy.killa.cc/api/v1/premium/whitelist/add \
 curl -s https://proxy.killa.cc/api/v1/premium/password/reset \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
-
-> Формат и поля результата смотри в OpenAPI Reference: `https://proxy.killa.cc/api/v1/openapi.json`.
