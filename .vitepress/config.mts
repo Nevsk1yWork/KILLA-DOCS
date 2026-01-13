@@ -64,7 +64,7 @@ export default defineConfig({
         text: "🔑 API",
         items: [
           {
-            text: "Методы", link: "/api/methods/"
+            text: "Методы", link: "/api/methods/",
             items: [
               { text: "Серверные", link: "/api/methods/dedicated" },
               { text: "Премиум", link: "/api/methods/premium" },
