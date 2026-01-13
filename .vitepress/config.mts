@@ -25,7 +25,7 @@ export default defineConfig({
       {
         text: "🚀 СТАРТ",
         items: [
-          { text: "Введение", link: "/start/quick-start" },
+          { text: "Введение", link: "/README" },
           { text: "Быстрый старт", link: "/start/quick-start" }
         ]
       },
