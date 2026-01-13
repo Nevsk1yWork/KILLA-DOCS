@@ -9,13 +9,28 @@
 * `country_code` (string) — страна
 * `period` (int) — период в днях
 * `count` (int) — количество
-* `ipv` (int) — версия IP (например 4/6)
+* `ipv` (int) — версия IP (3/4/6)
 
 **Пример:**
 
 ```bash
-curl -s "https://proxy.killa.cc/api/v1/dedicated/quote?country_code=RU&period=30&count=10&ipv=4" \
+curl -s "https://proxy.killa.cc/api/v1/dedicated/quote?country_code=ru&period=30&count=10&ipv=4" \
   -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+Ответ:
+
+```json
+{
+  "ok": true,
+  "data": {
+    "country_code": "ru",
+    "period": 30,
+    "count": 10,
+    "ipv": 4,
+    "price_rub": 1800.0
+  }
+}
 ```
 
 ## 2) Купить
@@ -32,28 +47,108 @@ curl -s "https://proxy.killa.cc/api/v1/dedicated/quote?country_code=RU&period=30
 curl -s https://proxy.killa.cc/api/v1/dedicated/buy \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"country_code":"RU","period":30,"count":10,"ipv":4}'
+  -d '{"country_code":"ru","period":30,"count":10,"ipv":4}'
 ```
 
-## 3) Продлить
+Ответ:
 
-`GET /dedicated/prolong/quote` — посчитать стоимость продления\
-`POST /dedicated/prolong` — продлить
+```json
+{
+  "ok": true,
+  "data": {
+    "check_id": "b_8300069",
+    "order_id": 13765429,
+    "price_rub": 8.9,
+    "proxies": [
+      {
+        "ids": 36400089,
+        "ip": "217.29.62.212",
+        "port": "10900",
+        "username": "username",
+        "password": "password",
+        "date_end": "2026-01-16 05:42:18"
+      }
+    ]
+  }
+}
+```
 
-**Пример (quote):**
+## 3) Продление
+
+`GET /dedicated/prolong/quote` — посчитать стоимость продления
+
+**Параметры (query):**
+
+* `ids` (int) — айди, полученный при покупке (ids)
+* `period` (int) — период в днях
+
+**Пример:**
 
 ```bash
-curl -s "https://proxy.killa.cc/api/v1/dedicated/prolong/quote?ids=123,124&period=30" \
+curl -s "https://proxy.killa.cc/api/v1/dedicated/prolong/quote?ids=36400089,36400090&period=3" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
-**Пример (prolong):**
+Ответ:&#x20;
+
+```json
+{
+  "ok": true,
+  "data": {
+    "period": 3,
+    "total_price_rub": 8.9,
+    "items": [
+      {
+        "ids": 36400089,
+        "ipv": 6,
+        "price_rub": 4.45
+      },
+      {
+        "ids": 36400090,
+        "ipv": 6,
+        "price_rub": 4.45
+      }
+    ]
+  }
+}
+```
+
+`POST /dedicated/prolong` — продлить
+
+**Body (JSON):**
+
+* `ids` (int) — айди, полученный при покупке (ids)
+* `period` (int) — период в днях
+
+**Пример:**
 
 ```bash
 curl -s https://proxy.killa.cc/api/v1/dedicated/prolong \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"ids":[123,124],"period":30}'
+  -d '{"ids":[36400089,36400090],"period":3}'
+```
+
+Ответ:
+
+```json
+{
+  "ok": true,
+  "data": {
+    "period": 3,
+    "total_price_rub": 8.9,
+    "items": [
+      {
+        "ids": 36400089,
+        "date_end": "2026-01-19 05:42:18"
+      },
+      {
+        "ids": 36400090,
+        "date_end": "2026-01-19 05:42:18"
+      }
+    ]
+  }
+}
 ```
 
 ## 4) Сменить протокол
@@ -74,4 +169,12 @@ curl -s https://proxy.killa.cc/api/v1/dedicated/protocol \
   -d '{"ids":[123,124],"port_type":"socks"}'
 ```
 
-> Формат и поля результата смотри в OpenAPI Reference: `https://proxy.killa.cc/api/v1/openapi.json`.
+> ipv:\
+> 3 - ipv4 shared\
+> 4 - ipv4 individual\
+> 6 - ipv6 individual
+>
+> period:\
+> IPv4 = 7/14/30/60/90> \
+> IPv6 = 3/7/14/30/60/90> \
+> PROLONG = 3/7/14/30/60/90>

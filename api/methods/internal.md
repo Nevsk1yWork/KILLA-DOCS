@@ -18,7 +18,7 @@ curl -s https://proxy.killa.cc/api/v1/balance \
   "ok": true,
   "data": {
     "balance_rub": 1234.56,
-    "api_spent_rub": 1235
+    "api_spent_rub": 1234.56
   }
 }
 ```
