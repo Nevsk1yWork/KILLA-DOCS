@@ -11,7 +11,7 @@ themeConfig: {
     {
       text: "🚀 СТАРТ",
       items: [
-        { text: "Введение", link: "/start/quick-start" }, // вместо /start/
+        { text: "Введение", link: "/start/readme" },
         { text: "Быстрый старт", link: "/start/quick-start" }
       ]
     },
@@ -19,8 +19,8 @@ themeConfig: {
       text: "🔑 API",
       items: [
         { text: "Методы", link: "/api/methods/" },
-        { text: "Авторизация", link: "/authorization" },
-        { text: "Ошибки", link: "/errors" }
+        { text: "Авторизация", link: "/api/authorization" },
+        { text: "Ошибки", link: "/api/errors" }
       ]
     },
     {
