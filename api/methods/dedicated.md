@@ -24,14 +24,16 @@
 
 ## Посчитать стоимость
 
-`GET /dedicated/quote`
+<mark style="color:$success;">`GET`</mark> `/dedicated/quote`
 
-### Параметры (query)
+### Параметры запроса (query)
 
-* `country_code` (string) — страна
-* `period` (int) — период в днях
-* `count` (int) — количество
-* `ipv` (int) — версия прокси
+| Name                                                | Type   | Description   |
+| --------------------------------------------------- | ------ | ------------- |
+| country\_code<mark style="color:$danger;">\*</mark> | string | Код страны    |
+| period<mark style="color:red;">\*</mark>            | int    | Период в днях |
+| count<mark style="color:$danger;">\*</mark>         | int    | Количество    |
+| ipv<mark style="color:$danger;">\*</mark>           | int    | Версия прокси |
 
 ### Пример
 
@@ -57,14 +59,16 @@ curl -s "https://proxy.killa.cc/api/v1/dedicated/quote?country_code=RU&period=30
 
 ## Купить
 
-`POST /dedicated/buy`
+<mark style="color:$success;">`POST`</mark> `/dedicated/buy`
 
-### Body (JSON)
+### Тело запроса (Request Body)
 
-* `country_code` (string) — страна
-* `period` (int) — период в днях
-* `count` (int) — количество
-* `ipv` (int) — версия прокси
+| Name                                                | Type   | Description   |
+| --------------------------------------------------- | ------ | ------------- |
+| country\_code<mark style="color:$danger;">\*</mark> | string | Код страны    |
+| period<mark style="color:red;">\*</mark>            | int    | Период в днях |
+| count<mark style="color:$danger;">\*</mark>         | int    | Количество    |
+| ipv<mark style="color:$danger;">\*</mark>           | int    | Версия прокси |
 
 ### Пример
 
@@ -72,7 +76,12 @@ curl -s "https://proxy.killa.cc/api/v1/dedicated/quote?country_code=RU&period=30
 curl -s https://proxy.killa.cc/api/v1/dedicated/buy \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"country_code":"RU","period":30,"count":10,"ipv":4}'
+  -d '{
+    "country_code":"ru",
+    "period":30,
+    "count":10,
+    "ipv":4
+  }'
 ```
 
 ### Ответ
@@ -100,11 +109,13 @@ curl -s https://proxy.killa.cc/api/v1/dedicated/buy \
 
 ## Список стран
 
-`GET /dedicated/country`
+<mark style="color:$success;">`GET`</mark> `/dedicated/country`
 
-### Параметры (query)
+### Параметры запроса (query)
 
-* `ipv` (int) — версия прокси
+| Name                                      | Type | Description   |
+| ----------------------------------------- | ---- | ------------- |
+| ipv<mark style="color:$danger;">\*</mark> | int  | Версия прокси |
 
 ### Пример
 
@@ -138,12 +149,14 @@ curl -s "https://proxy.killa.cc/api/v1/dedicated/country?ipv=4" \
 
 ## Количество доступных прокси
 
-`GET /dedicated/count`
+<mark style="color:$success;">`GET`</mark> `/dedicated/count`
 
-### Параметры (query)
+### Параметры запроса (query)
 
-* `country_code` (string) — код страны
-* `ipv` (int) — версия прокси
+| Name                                                | Type   | Description   |
+| --------------------------------------------------- | ------ | ------------- |
+| country\_code<mark style="color:$danger;">\*</mark> | string | Код страны    |
+| ipv<mark style="color:$danger;">\*</mark>           | int    | Версия прокси |
 
 ### Пример
 
@@ -167,12 +180,14 @@ curl -s "https://proxy.killa.cc/api/v1/dedicated/count?country_code=ru&ipv=4" \
 
 ## Стоимость продления
 
-`GET /dedicated/prolong/quote` — посчитать стоимость продления
+<mark style="color:$success;">`GET`</mark> `/dedicated/prolong/quote`
 
-### Параметры (query)
+### Параметры запроса (query)
 
-* `ids` (int) — айди, полученный при покупке (ids)
-* `period` (int) — период в днях
+| Name                                         | Type        | Description                              |
+| -------------------------------------------- | ----------- | ---------------------------------------- |
+| ids<mark style="color:$danger;">\*</mark>    | array\[int] | Список ID прокси, полученный при покупке |
+| period<mark style="color:$danger;">\*</mark> | int         | Период в днях                            |
 
 ### Пример
 
@@ -207,12 +222,14 @@ curl -s "https://proxy.killa.cc/api/v1/dedicated/prolong/quote?ids=36400089,3640
 
 ## Продление
 
-`POST /dedicated/prolong` — продлить
+<mark style="color:$success;">`POST`</mark> `/dedicated/prolong`
 
-### Body (JSON)
+### Тело запроса (Request Body)
 
-* `ids` (int) — айди, полученный при покупке (ids)
-* `period` (int) — период в днях
+| Name                                         | Type        | Description                              |
+| -------------------------------------------- | ----------- | ---------------------------------------- |
+| ids<mark style="color:$danger;">\*</mark>    | array\[int] | Список ID прокси, полученный при покупке |
+| period<mark style="color:$danger;">\*</mark> | int         | Период в днях                            |
 
 ### Пример
 
@@ -220,7 +237,10 @@ curl -s "https://proxy.killa.cc/api/v1/dedicated/prolong/quote?ids=36400089,3640
 curl -s https://proxy.killa.cc/api/v1/dedicated/prolong \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"ids":[36400089,36400090],"period":3}'
+  -d '{
+    "ids":[36400089,36400090],
+    "period":3
+  }'
 ```
 
 ### Ответ
@@ -247,12 +267,14 @@ curl -s https://proxy.killa.cc/api/v1/dedicated/prolong \
 
 ## Сменить протокол
 
-`POST /dedicated/protocol`
+<mark style="color:$success;">`POST`</mark> `/dedicated/protocol`
 
-### Body (JSON)
+### Тело запроса (Request Body)
 
-* `ids` (array\[int]) — id прокси
-* `port_type` (string) — целевой протокол/тип порта (например `http` или `socks`)
+| Name                                             | Type        | Description                              |
+| ------------------------------------------------ | ----------- | ---------------------------------------- |
+| ids<mark style="color:$danger;">\*</mark>        | array\[int] | Список ID прокси, полученный при покупке |
+| port\_type<mark style="color:$danger;">\*</mark> | string      | Целевой протокол: `http` или `socks`.    |
 
 ### Пример
 
@@ -260,7 +282,10 @@ curl -s https://proxy.killa.cc/api/v1/dedicated/prolong \
 curl -s https://proxy.killa.cc/api/v1/dedicated/protocol \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"ids":[36400089,36400090],"port_type":"socks"}'
+  -d '{
+    "ids":[36400089,36400090],
+    "port_type":"socks"
+  }'
 ```
 
 ### Ответ
