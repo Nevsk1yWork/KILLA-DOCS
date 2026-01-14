@@ -34,13 +34,21 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/quote?period_months=1" \
 ### **Body (JSON):**
 
 * `period_months` (int) — период в месяцах (1/3/6/12)
-* `telegram_id` (int) — уникальный идентификатор пользователя
+* `telegram_id` (int) — идентификатор конечного клиента
+
+### Пример
 
 ```bash
 curl -s https://proxy.killa.cc/api/v1/vpn/buy \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{"period_months":1, "telegram_id": 123456789}'
+```
+
+### Ответ
+
+```json
+// Some code
 ```
 
 ## 3) Продлить
@@ -50,7 +58,7 @@ curl -s https://proxy.killa.cc/api/v1/vpn/buy \
 ### **Body (JSON):**
 
 * `period_months` (int) — период в месяцах (1/3/6/12)
-* `telegram_id` (int) — уникальный идентификатор пользователя
+* `telegram_id` (int) — идентификатор конечного клиента
 
 ### Пример:
 
@@ -73,7 +81,7 @@ curl -s https://proxy.killa.cc/api/v1/vpn/renew \
 
 ### **Параметры (query):**
 
-* `telegram_id` (int) — уникальный идентификатор пользователя
+* `telegram_id` (int) — идентификатор конечного клиента
 
 ### Пример:
 
