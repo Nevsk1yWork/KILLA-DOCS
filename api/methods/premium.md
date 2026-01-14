@@ -75,7 +75,7 @@
 
 </details>
 
-## 1) Посчитать стоимость трафика
+## Посчитать стоимость трафика
 
 `GET /premium/traffic/quote`
 
@@ -105,7 +105,7 @@ curl -s "https://proxy.killa.cc/api/v1/premium/traffic/quote?pool_type=residenti
 }
 ```
 
-## 2) Купить трафик
+## Купить трафик
 
 `POST /premium/traffic/buy`
 
@@ -127,7 +127,7 @@ curl -s https://proxy.killa.cc/api/v1/premium/traffic/buy \
     "gb":10,
     "telegram_id":123456789,
     "client_key":"client-001"
-    }'
+  }'
 ```
 
 ### Ответ
@@ -143,7 +143,7 @@ curl -s https://proxy.killa.cc/api/v1/premium/traffic/buy \
 }
 ```
 
-## 3) Баланс трафика
+## Баланс трафика
 
 `GET /premium/traffic/balance`
 
@@ -166,13 +166,70 @@ curl -s "https://proxy.killa.cc/api/v1/premium/traffic/balance?pool_type=residen
 {
   "ok": true,
   "data": {
-    "pool_type": "residential",
-    "traffic_gb": 9.99043
+    "pools": [
+      { "pool_type": "residential", "traffic_gb": 9.99043 },
+      { "pool_type": "datacenter", "traffic_gb": 0.0 },
+      { "pool_type": "mobile", "traffic_gb": 0.0 },
+      { "pool_type": "residential_premium", "traffic_gb": 0.0 }
+    ]
   }
 }
 ```
 
-## 4) Генерация прокси-листа
+## Локации
+
+* `POST /premium/locations/countries` — получить список доступных стран для выбранного пула
+* `POST /premium/locations/states` — получить список штатов/регионов
+* `POST /premium/locations/cities` — получить список городов&#x20;
+* `POST /premium/locations/zipcodes` — получить список ZIP/индексов
+* `POST /premium/locations/asns` — получить список ASN
+
+#### Body (JSON):
+
+* `pool_type` (string) — тип пула
+* `countries` (array\[string]) — список стран (обязательно для `states/cities/zipcodes/asns`)
+* `states` (array\[string]) — список штатов (необязательно)
+* `cities` (array\[string]) — список городов (необязательно)
+
+### Пример (cities)
+
+```bash
+curl -s https://proxy.killa.cc/api/v1/premium/locations/cities \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "pool_type": "residential",
+    "countries": ["US"],
+    "states": ["California"]
+  }'
+```
+
+### Ответ (единый формат для всех методов)
+
+```json
+{
+  "ok": true,
+  "data": {
+    "pool_type": "residential",
+    "countries": ["us"],
+    "states": ["california"],
+    "items": [
+      {
+        "code": "alameda",
+        "name": "Alameda",
+        "count": 16
+      },
+      {
+        "code": "alhambra",
+        "name": "Alhambra",
+        "count": 9
+      }
+    ]
+  }
+}
+```
+
+## Генерация прокси-листа
 
 `POST /premium/proxies/generate`
 
@@ -200,8 +257,6 @@ curl -s "https://proxy.killa.cc/api/v1/premium/traffic/balance?pool_type=residen
 * `anonymous` (bool) — анонимность (по умолчанию `false`)
 * `quantity` (int) — количество прокси (по умолчанию `1`)
 * `format_id` (int) — формат строк в ответе (по умолчанию `1`, см. «Памятка»)
-
-
 
 ### Пример (минимальный)
 
@@ -246,7 +301,7 @@ gw.killa.cc:10001:login:password",
 }
 ```
 
-## 5) Whitelist IP
+## Whitelist IP
 
 * `GET /premium/whitelist` — получить текущий whitelist
 * `POST /premium/whitelist/add` — добавить IP
@@ -282,7 +337,7 @@ curl -s https://proxy.killa.cc/api/v1/premium/whitelist/add \
 }
 ```
 
-## 6) Пароль sub-user
+## Пароль sub-user
 
 * `GET /premium/password` — получить текущий пароль
 * `POST /premium/password/reset` — сбросить пароль
@@ -314,3 +369,5 @@ curl -s https://proxy.killa.cc/api/v1/premium/password/reset \
   }
 }
 ```
+
+##
