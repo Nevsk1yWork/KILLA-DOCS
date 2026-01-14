@@ -2,7 +2,7 @@
 
 <details>
 
-<summary><mark style="color:$primary;"><strong>Памятка</strong></mark></summary>
+<summary><mark style="color:blue;"><strong>Памятка</strong></mark></summary>
 
 ***
 

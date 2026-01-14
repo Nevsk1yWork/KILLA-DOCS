@@ -2,7 +2,7 @@
 
 <details>
 
-<summary>Памятка</summary>
+<summary><mark style="color:blue;">Памятка</mark></summary>
 
 ***
 

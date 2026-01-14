@@ -1,36 +1,46 @@
 # Серверные
 
-> **Параметр `ipv` (тип/версия адреса):**
->
-> * `3` — IPv4 Shared (общий IPv4)
-> * `4` — IPv4 Individual (выделенный IPv4)
-> * `6` — IPv6 Individual (выделенный IPv6)
->
-> **Допустимые сроки `period` (в днях):**
->
-> * Для **IPv4** (`3`/`4`): `7 / 14 / 30 / 60 / 90`
-> * Для **IPv6** (`6`): `3 / 7 / 14 / 30 / 60 / 90`
-> * Для **продления**: `3 / 7 / 14 / 30 / 60 / 90`
+<details>
 
-## 1) Посчитать стоимость
+<summary><mark style="color:blue;"><strong>Памятка</strong></mark></summary>
+
+***
+
+**Параметр `ipv` (тип/версия адреса):**
+
+* `3` — IPv4 Shared (общий IPv4)
+* `4` — IPv4 Individual (выделенный IPv4)
+* `6` — IPv6 Individual (выделенный IPv6)
+
+***
+
+**Допустимые сроки `period` (в днях):**
+
+* Для **IPv4** (`3`/`4`): `7 / 14 / 30 / 60 / 90`
+* Для **IPv6** (`6`): `3 / 7 / 14 / 30 / 60 / 90`
+* Для **продления**: `3 / 7 / 14 / 30 / 60 / 90`
+
+</details>
+
+## Посчитать стоимость
 
 `GET /dedicated/quote`
 
-### **Параметры (query):**
+### Параметры (query)
 
 * `country_code` (string) — страна
 * `period` (int) — период в днях
 * `count` (int) — количество
-* `ipv` (int) — версия IP (3/4/6)
+* `ipv` (int) — версия прокси
 
-### **Пример:**
+### Пример
 
 ```bash
 curl -s "https://proxy.killa.cc/api/v1/dedicated/quote?country_code=RU&period=30&count=10&ipv=4" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
-### Ответ:
+### Ответ
 
 ```json
 {
@@ -45,18 +55,18 @@ curl -s "https://proxy.killa.cc/api/v1/dedicated/quote?country_code=RU&period=30
 }
 ```
 
-## 2) Купить
+## Купить
 
 `POST /dedicated/buy`
 
-### **Body (JSON):**
+### Body (JSON)
 
 * `country_code` (string) — страна
 * `period` (int) — период в днях
 * `count` (int) — количество
-* `ipv` (int) — версия IP (3/4/6)
+* `ipv` (int) — версия прокси
 
-### **Пример:**
+### Пример
 
 ```bash
 curl -s https://proxy.killa.cc/api/v1/dedicated/buy \
@@ -65,7 +75,7 @@ curl -s https://proxy.killa.cc/api/v1/dedicated/buy \
   -d '{"country_code":"RU","period":30,"count":10,"ipv":4}'
 ```
 
-### Ответ:
+### Ответ
 
 ```json
 {
@@ -88,23 +98,90 @@ curl -s https://proxy.killa.cc/api/v1/dedicated/buy \
 }
 ```
 
-## 3) Стоимость продления
+## Список стран
+
+`GET /dedicated/country`
+
+### Параметры (query)
+
+* `ipv` (int) — версия прокси
+
+### Пример
+
+```bash
+curl -s "https://proxy.killa.cc/api/v1/dedicated/country?ipv=4" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+### Ответ
+
+```json
+{
+  "ok": true,
+  "data": {
+    "ipv": 4,
+    "countries": [
+      {
+        "country_code": "ua",
+        "title": "🇺🇦 Украина"
+      },
+      {
+        "country_code": "us",
+        "title": "🇺🇸 США"
+      }
+    ]
+  }
+}
+```
+
+***
+
+## Количество доступных прокси
+
+`GET /dedicated/count`
+
+### Параметры (query)
+
+* `country_code` (string) — код страны
+* `ipv` (int) — версия прокси
+
+### Пример
+
+```bash
+curl -s "https://proxy.killa.cc/api/v1/dedicated/count?country_code=ru&ipv=4" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+### Ответ
+
+```json
+{
+  "ok": true,
+  "data": {
+    "country_code": "ru",
+    "ipv": 4,
+    "count": 1233
+  }
+}
+```
+
+## Стоимость продления
 
 `GET /dedicated/prolong/quote` — посчитать стоимость продления
 
-### **Параметры (query):**
+### Параметры (query)
 
 * `ids` (int) — айди, полученный при покупке (ids)
 * `period` (int) — период в днях
 
-### **Пример:**
+### Пример
 
 ```bash
 curl -s "https://proxy.killa.cc/api/v1/dedicated/prolong/quote?ids=36400089,36400090&period=3" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
-### Ответ:&#x20;
+### Ответ
 
 ```json
 {
@@ -128,16 +205,16 @@ curl -s "https://proxy.killa.cc/api/v1/dedicated/prolong/quote?ids=36400089,3640
 }
 ```
 
-## 4) Продление
+## Продление
 
 `POST /dedicated/prolong` — продлить
 
-### **Body (JSON):**
+### Body (JSON)
 
 * `ids` (int) — айди, полученный при покупке (ids)
 * `period` (int) — период в днях
 
-### **Пример:**
+### Пример
 
 ```bash
 curl -s https://proxy.killa.cc/api/v1/dedicated/prolong \
@@ -146,7 +223,7 @@ curl -s https://proxy.killa.cc/api/v1/dedicated/prolong \
   -d '{"ids":[36400089,36400090],"period":3}'
 ```
 
-### Ответ:
+### Ответ
 
 ```json
 {
@@ -168,16 +245,16 @@ curl -s https://proxy.killa.cc/api/v1/dedicated/prolong \
 }
 ```
 
-## 5) Сменить протокол
+## Сменить протокол
 
 `POST /dedicated/protocol`
 
-### **Body (JSON):**
+### Body (JSON)
 
 * `ids` (array\[int]) — id прокси
 * `port_type` (string) — целевой протокол/тип порта (например `http` или `socks`)
 
-### **Пример:**
+### Пример
 
 ```bash
 curl -s https://proxy.killa.cc/api/v1/dedicated/protocol \
@@ -186,7 +263,7 @@ curl -s https://proxy.killa.cc/api/v1/dedicated/protocol \
   -d '{"ids":[36400089,36400090],"port_type":"socks"}'
 ```
 
-### Ответ:
+### Ответ
 
 ```json
 {
