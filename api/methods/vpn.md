@@ -1,12 +1,66 @@
 # VPN
 
+<details>
+
+<summary><mark style="color:$primary;"><strong>Памятка</strong></mark></summary>
+
+***
+
+**Идентификация клиента (обязательно для всех VPN-методов)**
+
+Все операции выполняются для **клиента реселлера**, а не для владельца токена.
+
+Клиент определяется парой:
+
+* `telegram_id` — Telegram ID конечного пользователя.
+* `client_key` — произвольная строка, которую задаёт реселлер (можно писать что угодно: внутренний id, username, email, `user-42` и т.п.).
+
+По связке `telegram_id + client_key` API:
+
+* покупает VPN-подписки,
+* возвращает список подписок,
+* продлевает конкретную подписку (по `uuid`).
+
+Доступ изолирован: реселлер с токеном видит/изменяет только своих клиентов (свою пару `telegram_id + client_key`).
+
+***
+
+#### Периоды покупки и продления
+
+`period_months` — период в месяцах. Поддерживаемые значения:
+
+* `1`, `3`, `6`, `12`
+
+***
+
+#### Статусы подписки
+
+`status` может быть одним из:
+
+* `ACTIVE` — активна
+* `DISABLED` — отключена
+* `LIMITED` — ограничена (например, лимит устройств/трафика)
+* `EXPIRED` — истекла
+
+***
+
+#### UUID подписки (важно для продления)
+
+У клиента может быть несколько подписок одновременно.
+
+* `GET /vpn/info` возвращает **список** подписок, каждая содержит `uuid`.
+* `POST /vpn/renew` продлевает **конкретную** подписку — нужно передать её `uuid`.
+* `POST /vpn/buy` позволяет купить дополнительную подписку даже если уже есть активные.
+
+</details>
+
 ## 1) Посчитать стоимость
 
 `GET /vpn/quote`
 
 ### **Параметры (query)**
 
-* `period_months` (int) — период в месяцах (1/3/6/12)
+* `period_months` (int) — период в месяцах
 
 ### Пример
 
@@ -35,7 +89,7 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/quote?period_months=1" \
 
 * `telegram_id` (int) — идентификатор конечного клиента
 * `client_key` (string) — ключ клиента у реселлера
-* `period_months` (int) — период в месяцах (1/3/6/12)
+* `period_months` (int) — период в месяцах
 
 ### Пример
 
@@ -70,7 +124,7 @@ curl -s https://proxy.killa.cc/api/v1/api/v1/vpn/buy \
 
 ### **Body (JSON)**
 
-* `period_months` (int) — период в месяцах (1/3/6/12)
+* `period_months` (int) — период в месяцах
 * `telegram_id` (int) — идентификатор конечного клиента
 * `client_key` (string) — ключ клиента у реселлера
 * `uuid` (string) — **UUID подписки**, которую нужно продлить
@@ -141,6 +195,3 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/info?telegram_id=123456789&client_key
 }
 
 ```
-
-> <mark style="color:$primary;">**Возможные статусы подписки:**</mark>\
-> <mark style="color:$info;">ACTIVE — Активна</mark>> \ <mark style="color:$info;">DISABLED — Приостановлена</mark>\ <mark style="color:$info;">LIMITED — Лимит устройств/трафика</mark>> \ <mark style="color:$info;">EXPIRED — Истекла</mark>
