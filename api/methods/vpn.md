@@ -6,7 +6,7 @@
 
 ***
 
-**Идентификация клиента (обязательно для всех VPN-методов)**
+#### **Идентификация клиента (обязательно для всех VPN-методов)**
 
 Все операции выполняются для **клиента реселлера**, а не для владельца токена.
 
@@ -15,13 +15,7 @@
 * `telegram_id` — Telegram ID конечного пользователя.
 * `client_key` — произвольная строка, которую задаёт реселлер (можно писать что угодно: внутренний id, username, email, `user-42` и т.п.).
 
-По связке `telegram_id + client_key` API:
-
-* покупает VPN-подписки,
-* возвращает список подписок,
-* продлевает конкретную подписку (по `uuid`).
-
-Доступ изолирован: реселлер с токеном видит/изменяет только своих клиентов (свою пару `telegram_id + client_key`).
+По паре `telegram_id + client_key` происходит управление. `client_key` можно использовать одинаковым для разных `telegram_id` — важна именно пара.
 
 ***
 
@@ -127,7 +121,7 @@ curl -s https://proxy.killa.cc/api/v1/api/v1/vpn/buy \
 * `period_months` (int) — период в месяцах
 * `telegram_id` (int) — идентификатор конечного клиента
 * `client_key` (string) — ключ клиента у реселлера
-* `uuid` (string) — **UUID подписки**, которую нужно продлить
+* `uuid` (string) — UUID подписки
 
 ### Пример
 
@@ -157,7 +151,42 @@ curl -s https://proxy.killa.cc/api/v1/vpn/renew \
 }
 ```
 
-## 4) Получить текущую информацию
+## 4) Удалить подписку
+
+`POST /vpn/delete`
+
+### **Body (JSON)**
+
+* `telegram_id` (int) — идентификатор конечного клиента
+* `client_key` (string) — ключ клиента у реселлера
+* `uuid` (string) — UUID подписки
+
+### **Пример**
+
+```bash
+curl -s https://proxy.killa.cc/api/v1/vpn/delete \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "telegram_id":123456789,
+    "client_key":"client-001",
+    "uuid":"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    }'
+```
+
+### Ответ
+
+```json
+{
+  "ok": true,
+  "data": {
+    "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "deleted": true
+  }
+}
+```
+
+## 5) Получить текущую информацию
 
 `GET /vpn/info`
 
@@ -193,5 +222,4 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/info?telegram_id=123456789&client_key
     ]
   }
 }
-
 ```
