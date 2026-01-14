@@ -48,6 +48,11 @@
 
 </details>
 
+{% hint style="info" %}
+* **URL для запросов:** `https://proxy.killa.cc/api/v1`
+* **Авторизация:** для каждого запроса передавайте токен в заголовке `Authorization: Bearer <token>`.
+{% endhint %}
+
 ## 1) Посчитать стоимость
 
 <mark style="color:$success;">`GET`</mark> `/vpn/quote`
