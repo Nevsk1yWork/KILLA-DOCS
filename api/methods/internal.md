@@ -2,7 +2,7 @@
 
 ## Получить баланс
 
-`GET /balance`
+<mark style="color:$success;">`GET`</mark> `/balance`
 
 ### Пример
 

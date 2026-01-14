@@ -50,11 +50,13 @@
 
 ## 1) Посчитать стоимость
 
-`GET /vpn/quote`
+<mark style="color:$success;">`GET`</mark> `/vpn/quote`
 
-### **Параметры (query)**
+### **Параметры запроса (query)**
 
-* `period_months` (int) — период в месяцах
+| Name                                                 | Type | Description       |
+| ---------------------------------------------------- | ---- | ----------------- |
+| period\_months<mark style="color:$danger;">\*</mark> | int  | Период в месяцах. |
 
 ### Пример
 
@@ -77,13 +79,15 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/quote?period_months=1" \
 
 ## 2) Купить
 
-`POST /vpn/buy`
+<mark style="color:$success;">`POST`</mark> `/vpn/buy`
 
-### **Body (JSON)**
+### Тело запроса (Request Body)
 
-* `telegram_id` (int) — идентификатор конечного клиента
-* `client_key` (string) — ключ клиента у реселлера
-* `period_months` (int) — период в месяцах
+| Name                                                 | Type   | Description                    |
+| ---------------------------------------------------- | ------ | ------------------------------ |
+| telegram\_id<mark style="color:$danger;">\*</mark>   | int    | Telegram ID конечного клиента. |
+| client\_key<mark style="color:$danger;">\*</mark>    | string | Ключ клиента у реселлера       |
+| period\_months<mark style="color:$danger;">\*</mark> | int    | Период в месяцах               |
 
 ### Пример
 
@@ -114,14 +118,16 @@ curl -s https://proxy.killa.cc/api/v1/api/v1/vpn/buy \
 
 ## 3) Продлить
 
-`POST /vpn/renew`
+<mark style="color:$success;">`POST`</mark> `/vpn/renew`
 
-### **Body (JSON)**
+### Тело запроса (Request Body)
 
-* `period_months` (int) — период в месяцах
-* `telegram_id` (int) — идентификатор конечного клиента
-* `client_key` (string) — ключ клиента у реселлера
-* `uuid` (string) — UUID подписки
+| Name                                                 | Type   | Description                    |
+| ---------------------------------------------------- | ------ | ------------------------------ |
+| period\_months<mark style="color:$danger;">\*</mark> | int    | Период в месяцах               |
+| telegram\_id<mark style="color:$danger;">\*</mark>   | int    | Telegram ID конечного клиента. |
+| client\_key<mark style="color:$danger;">\*</mark>    | string | Ключ клиента у реселлера       |
+| uuid<mark style="color:$danger;">\*</mark>           | string | UUID подписки                  |
 
 ### Пример
 
@@ -134,7 +140,7 @@ curl -s https://proxy.killa.cc/api/v1/vpn/renew \
     "telegram_id":123456789,
     "client_key":"client-001",
     "uuid":"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-    }'
+  }'
 ```
 
 ### Ответ
@@ -153,13 +159,15 @@ curl -s https://proxy.killa.cc/api/v1/vpn/renew \
 
 ## 4) Удалить подписку
 
-`POST /vpn/delete`
+<mark style="color:$success;">`POST`</mark> `/vpn/delete`
 
-### **Body (JSON)**
+### Тело запроса (Request Body)
 
-* `telegram_id` (int) — идентификатор конечного клиента
-* `client_key` (string) — ключ клиента у реселлера
-* `uuid` (string) — UUID подписки
+| Name                                               | Type   | Description                    |
+| -------------------------------------------------- | ------ | ------------------------------ |
+| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента. |
+| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера       |
+| uuid<mark style="color:$danger;">\*</mark>         | string | UUID подписки                  |
 
 ### **Пример**
 
@@ -171,7 +179,7 @@ curl -s https://proxy.killa.cc/api/v1/vpn/delete \
     "telegram_id":123456789,
     "client_key":"client-001",
     "uuid":"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    }'
+  }'
 ```
 
 ### Ответ
@@ -188,12 +196,14 @@ curl -s https://proxy.killa.cc/api/v1/vpn/delete \
 
 ## 5) Получить текущую информацию
 
-`GET /vpn/info`
+<mark style="color:$success;">`GET`</mark> `/vpn/info`
 
-### **Параметры (query)**
+### **Параметры запроса (query)**
 
-* `telegram_id` (int) — идентификатор конечного клиента
-* `client_key` (string) — ключ клиента у реселлера
+| Name                                               | Type   | Description                    |
+| -------------------------------------------------- | ------ | ------------------------------ |
+| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента. |
+| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера       |
 
 ### Пример
 
