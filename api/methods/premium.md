@@ -68,18 +68,25 @@ curl -s https://proxy.killa.cc/api/v1/premium/traffic/buy \
 ### **Параметры (query):**
 
 * `pool_type` (string) — тип пула
+* `telegram_id` (int) — идентификатор конечного клиента
 
 ### Пример:
 
 ```bash
-curl -s "https://proxy.killa.cc/api/v1/premium/traffic/balance?pool_type=residential" \
+curl -s "https://proxy.killa.cc/api/v1/premium/traffic/balance?pool_type=residential&telegram_id=8015282478" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
 ### Ответ:
 
 ```json
-// Some code
+{
+  "ok": true,
+  "data": {
+    "pool_type": "residential",
+    "traffic_gb": 9.99043
+  }
+}
 ```
 
 ## 4) Генерация прокси-листа
