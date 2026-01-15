@@ -35,21 +35,23 @@ curl -s https://proxy.killa.cc/api/v1/balance \
 }
 ```
 
-## Пример 2 — посчитать стоимость (quote) перед покупкой Dedicated
+## Пример 2 — посчитать стоимость (quote) перед покупкой
 
 ```bash
 curl -s "https://proxy.killa.cc/api/v1/dedicated/quote?country_code=RU&period=30&count=10&ipv=4" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
-Параметры:
+### Параметры запроса
 
-* `country_code` — страна
-* `period` — период (дни)
-* `count` — количество
-* `ipv` — версия IP
+| Name                                                | Type   | Description   |
+| --------------------------------------------------- | ------ | ------------- |
+| country\_code<mark style="color:$danger;">\*</mark> | string | Код страны    |
+| period<mark style="color:red;">\*</mark>            | int    | Период в днях |
+| count<mark style="color:$danger;">\*</mark>         | int    | Количество    |
+| ipv<mark style="color:$danger;">\*</mark>           | int    | Версия прокси |
 
-## Пример 3 — купить Dedicated
+## Пример 3 — купить прокси
 
 ```bash
 curl -s https://proxy.killa.cc/api/v1/dedicated/buy \
@@ -67,8 +69,8 @@ curl -s https://proxy.killa.cc/api/v1/dedicated/buy \
 
 <summary><strong>Типовые сценарии (что делать дальше)</strong></summary>
 
-* **Dedicated:** quote → buy → (prolong / protocol)
-* **Premium:** traffic/quote → traffic/buy → proxies/generate → (whitelist / password)
+* **Серверные:** quote → buy → (prolong / protocol)
+* **Премиум:** traffic/quote → traffic/buy → proxies/generate → (whitelist / password)
 * **VPN:** vpn/quote → vpn/buy → vpn/info → vpn/renew
 
 </details>

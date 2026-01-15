@@ -1,16 +1,18 @@
 # Поддержка
 
-## Как быстрее решить проблему
+{% hint style="info" %}
+Чем точнее данные — тем быстрее решение.&#x20;
+{% endhint %}
 
-При обращении подготовь:
+### Как быстрее решить проблему
 
-* твой Telegram ID (или @username)
-* время запроса (примерно)
-* endpoint и параметры (без токена)
-* полный JSON-ответ ошибки
+При обращении подготовьте:
 
-## Куда писать
+* ваш Telegram ID (или @username)
+* endpoint и параметры
+* полный JSON-ответ ошибки (`ok: false`)
 
-Техническая поддержка: [https://t.me/KillaSupport\_Bot](https://t.me/KillaSupport_Bot)
+### Куда писать
 
-Сотрудничество: [https://t.me/KillaCreator](https://t.me/KillaCreator)
+* [Техническая поддержка](https://t.me/KillaSupport_Bot)
+* [Сотрудничество](https://t.me/KillaCreator)

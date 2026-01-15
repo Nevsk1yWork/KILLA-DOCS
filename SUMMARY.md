@@ -20,7 +20,6 @@
 * [cURL](examples/curl.md)
 * [Python](examples/python.md)
 * [Node.js](examples/nodejs.md)
-* [Go](examples/go.md)
 * [PHP](examples/php.md)
 
 ## 🔗 Полезное <a href="#help" id="help"></a>

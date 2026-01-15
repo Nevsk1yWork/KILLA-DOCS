@@ -2,7 +2,7 @@
 
 <details>
 
-<summary><mark style="color:blue;">Памятка</mark></summary>
+<summary>Памятка</summary>
 
 ***
 
@@ -118,12 +118,12 @@ curl -s "https://proxy.killa.cc/api/v1/premium/traffic/quote?pool_type=residenti
 
 ### Тело запроса (Request Body)
 
-| Name                                               | Type   | Description                    |
-| -------------------------------------------------- | ------ | ------------------------------ |
-| pool\_type<mark style="color:$danger;">\*</mark>   | string | Тип пула.                      |
-| gb<mark style="color:$danger;">\*</mark>           | number | Объём в GB.                    |
-| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента. |
-| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера.      |
+| Name                                               | Type   | Description                   |
+| -------------------------------------------------- | ------ | ----------------------------- |
+| pool\_type<mark style="color:$danger;">\*</mark>   | string | Тип пула                      |
+| gb<mark style="color:$danger;">\*</mark>           | number | Объём в GB                    |
+| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента |
+| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера      |
 
 ### **Пример**
 
@@ -158,11 +158,11 @@ curl -s https://proxy.killa.cc/api/v1/premium/traffic/buy \
 
 ### **Параметры запроса (query)**
 
-| Name                                               | Type   | Description                    |
-| -------------------------------------------------- | ------ | ------------------------------ |
-| pool\_type<mark style="color:$danger;">\*</mark>   | string | Тип пула.                      |
-| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента. |
-| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера.      |
+| Name                                               | Type   | Description                   |
+| -------------------------------------------------- | ------ | ----------------------------- |
+| pool\_type<mark style="color:$danger;">\*</mark>   | string | Тип пула                      |
+| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента |
+| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера      |
 
 ### Пример
 
@@ -197,12 +197,12 @@ curl -s "https://proxy.killa.cc/api/v1/premium/traffic/balance?pool_type=residen
 
 ### Тело запроса (Request Body)
 
-| Name                                             | Type           | Description                                                              |
-| ------------------------------------------------ | -------------- | ------------------------------------------------------------------------ |
-| pool\_type<mark style="color:$danger;">\*</mark> | string         | Тип пула.                                                                |
-| countries                                        | array\[string] | Список стран (обязателен для `states` / `cities` / `zipcodes` / `asns`). |
-| states                                           | array\[string] | Список штатов/регионов (опционально, как фильтр).                        |
-| cities                                           | array\[string] | Список городов (опционально, как фильтр).                                |
+| Name                                             | Type           | Description                                                             |
+| ------------------------------------------------ | -------------- | ----------------------------------------------------------------------- |
+| pool\_type<mark style="color:$danger;">\*</mark> | string         | Тип пула                                                                |
+| countries                                        | array\[string] | Список стран (обязателен для `states` / `cities` / `zipcodes` / `asns`) |
+| states                                           | array\[string] | Список штатов/регионов (опционально, как фильтр)                        |
+| cities                                           | array\[string] | Список городов (опционально, как фильтр)                                |
 
 ### Пример (cities)
 
@@ -248,22 +248,22 @@ curl -s https://proxy.killa.cc/api/v1/premium/locations/cities \
 
 ### Тело запроса (Request Body)
 
-| Name                                               | Type           | Description                                                                                                |
-| -------------------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------- |
-| pool\_type<mark style="color:$danger;">\*</mark>   | string         | Тип пула                                                                                                   |
-| countries<mark style="color:$danger;">\*</mark>    | array\[string] | Список стран                                                                                               |
-| telegram\_id<mark style="color:$danger;">\*</mark> | int            | Telegram ID конечного клиента.                                                                             |
-| client\_key<mark style="color:$danger;">\*</mark>  | string         | Ключ клиента у реселлера                                                                                   |
-| protocol                                           | string         | Протокол: `http` или `socks5` (по умолчанию `http`).                                                       |
-| type                                               | string         | Тип ротации: `sticky` (по времени) или `rotating` (на каждый запрос).                                      |
-| session\_ttl                                       | int            | TTL сессии в минутах (только для `type=sticky`, обычно 1–120).                                             |
-| anonymous                                          | bool           | Анонимность: `true/false`.                                                                                 |
-| quantity                                           | int            | Количество прокси (по умолчанию `1`).                                                                      |
-| format\_id                                         | int            | Формат строк: `1`=`hostname:port:login:password`, `2`=`login:password@hostname:port`, `3`=`hostname:port`. |
-| states                                             | array\[string] | Фильтр по штатам/регионам.                                                                                 |
-| cities                                             | array\[string] | Фильтр по городам.                                                                                         |
-| zipcodes                                           | array\[string] | Фильтр по ZIP/индексам.                                                                                    |
-| asns                                               | array\[string] | Фильтр по ASN.                                                                                             |
+| Name                                               | Type           | Description                                                                                                                                                                                  |
+| -------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| pool\_type<mark style="color:$danger;">\*</mark>   | string         | Тип пула                                                                                                                                                                                     |
+| countries<mark style="color:$danger;">\*</mark>    | array\[string] | Список стран                                                                                                                                                                                 |
+| telegram\_id<mark style="color:$danger;">\*</mark> | int            | Telegram ID конечного клиента.                                                                                                                                                               |
+| client\_key<mark style="color:$danger;">\*</mark>  | string         | Ключ клиента у реселлера                                                                                                                                                                     |
+| protocol                                           | string         | Протокол: `http` или `socks5` (по умолчанию `http`)                                                                                                                                          |
+| type                                               | string         | Тип ротации: `sticky` (по времени) или `rotating` (на каждый запрос)                                                                                                                         |
+| session\_ttl                                       | int            | TTL сессии в минутах (только для `type=sticky`, обычно 1–120)                                                                                                                                |
+| anonymous                                          | bool           | Анонимность: `true/false`                                                                                                                                                                    |
+| quantity                                           | int            | Количество прокси (по умолчанию `1`)                                                                                                                                                         |
+| format\_id                                         | int            | <p>Формат строк: <code>1</code>=<code>hostname:port:login:password</code></p><p><code>2</code>=<code>login:password@hostname:port</code></p><p><code>3</code>=<code>hostname:port</code></p> |
+| states                                             | array\[string] | Фильтр по штатам/регионам                                                                                                                                                                    |
+| cities                                             | array\[string] | Фильтр по городам                                                                                                                                                                            |
+| zipcodes                                           | array\[string] | Фильтр по ZIP/индексам                                                                                                                                                                       |
+| asns                                               | array\[string] | Фильтр по ASN                                                                                                                                                                                |
 
 ### Пример (минимальный)
 
@@ -316,11 +316,11 @@ gw.killa.cc:10001:login:password",
 
 ### Параметры / тело запроса
 
-| Name                                               | Type   | Description                                                 |
-| -------------------------------------------------- | ------ | ----------------------------------------------------------- |
-| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента                               |
-| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера                                    |
-| ip                                                 | string | IP адрес для белого списка (только для `/add` и `/remove`). |
+| Name                                               | Type   | Description                                                |
+| -------------------------------------------------- | ------ | ---------------------------------------------------------- |
+| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента                              |
+| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера                                   |
+| ip                                                 | string | IP адрес для белого списка (только для `/add` и `/remove`) |
 
 ### **Пример (add)**
 
