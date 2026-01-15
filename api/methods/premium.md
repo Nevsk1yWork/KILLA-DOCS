@@ -84,7 +84,7 @@
 
 <mark style="color:$success;">`GET`</mark> `/premium/traffic/quote`
 
-### **Параметры запроса (query)**
+### **Параметры запроса**
 
 | Name                                             | Type   | Description |
 | ------------------------------------------------ | ------ | ----------- |
@@ -116,7 +116,7 @@ curl -s "https://proxy.killa.cc/api/v1/premium/traffic/quote?pool_type=residenti
 
 <mark style="color:$success;">`POST`</mark> `/premium/traffic/buy`
 
-### Тело запроса (Request Body)
+### Тело запроса
 
 | Name                                               | Type   | Description                   |
 | -------------------------------------------------- | ------ | ----------------------------- |
@@ -156,7 +156,7 @@ curl -s https://proxy.killa.cc/api/v1/premium/traffic/buy \
 
 <mark style="color:$success;">`GET`</mark> `/premium/traffic/balance`
 
-### **Параметры запроса (query)**
+### **Параметры запроса**
 
 | Name                                               | Type   | Description                   |
 | -------------------------------------------------- | ------ | ----------------------------- |
@@ -195,7 +195,7 @@ curl -s "https://proxy.killa.cc/api/v1/premium/traffic/balance?pool_type=residen
 * <mark style="color:$success;">`POST`</mark> `/premium/locations/zipcodes` — получить список ZIP/индексов
 * <mark style="color:$success;">`POST`</mark> `/premium/locations/asns` — получить список ASN
 
-### Тело запроса (Request Body)
+### Тело запроса
 
 | Name                                             | Type           | Description                                                             |
 | ------------------------------------------------ | -------------- | ----------------------------------------------------------------------- |
@@ -246,7 +246,7 @@ curl -s https://proxy.killa.cc/api/v1/premium/locations/cities \
 
 <mark style="color:$success;">`POST`</mark> `/premium/proxies/generate`
 
-### Тело запроса (Request Body)
+### Тело запроса
 
 | Name                                               | Type           | Description                                                                                                                                                                                  |
 | -------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -380,5 +380,3 @@ curl -s https://proxy.killa.cc/api/v1/premium/password/reset \
   }
 }
 ```
-
-##

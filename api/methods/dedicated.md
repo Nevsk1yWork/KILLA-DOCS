@@ -31,7 +31,7 @@
 
 <mark style="color:$success;">`GET`</mark> `/dedicated/quote`
 
-### Параметры запроса (query)
+### Параметры запроса
 
 | Name                                                | Type   | Description   |
 | --------------------------------------------------- | ------ | ------------- |
@@ -66,7 +66,7 @@ curl -s "https://proxy.killa.cc/api/v1/dedicated/quote?country_code=RU&period=30
 
 <mark style="color:$success;">`POST`</mark> `/dedicated/buy`
 
-### Тело запроса (Request Body)
+### Тело запроса
 
 | Name                                                | Type   | Description   |
 | --------------------------------------------------- | ------ | ------------- |
@@ -116,7 +116,7 @@ curl -s https://proxy.killa.cc/api/v1/dedicated/buy \
 
 <mark style="color:$success;">`GET`</mark> `/dedicated/country`
 
-### Параметры запроса (query)
+### Параметры запроса
 
 | Name                                      | Type | Description   |
 | ----------------------------------------- | ---- | ------------- |
@@ -156,7 +156,7 @@ curl -s "https://proxy.killa.cc/api/v1/dedicated/country?ipv=4" \
 
 <mark style="color:$success;">`GET`</mark> `/dedicated/count`
 
-### Параметры запроса (query)
+### Параметры запроса
 
 | Name                                                | Type   | Description   |
 | --------------------------------------------------- | ------ | ------------- |
@@ -187,7 +187,7 @@ curl -s "https://proxy.killa.cc/api/v1/dedicated/count?country_code=ru&ipv=4" \
 
 <mark style="color:$success;">`GET`</mark> `/dedicated/prolong/quote`
 
-### Параметры запроса (query)
+### Параметры запроса
 
 | Name                                         | Type        | Description                              |
 | -------------------------------------------- | ----------- | ---------------------------------------- |
@@ -229,7 +229,7 @@ curl -s "https://proxy.killa.cc/api/v1/dedicated/prolong/quote?ids=36400089,3640
 
 <mark style="color:$success;">`POST`</mark> `/dedicated/prolong`
 
-### Тело запроса (Request Body)
+### Тело запроса
 
 | Name                                         | Type        | Description                              |
 | -------------------------------------------- | ----------- | ---------------------------------------- |
@@ -274,7 +274,7 @@ curl -s https://proxy.killa.cc/api/v1/dedicated/prolong \
 
 <mark style="color:$success;">`POST`</mark> `/dedicated/protocol`
 
-### Тело запроса (Request Body)
+### Тело запроса
 
 | Name                                             | Type        | Description                              |
 | ------------------------------------------------ | ----------- | ---------------------------------------- |

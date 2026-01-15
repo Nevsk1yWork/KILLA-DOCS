@@ -203,7 +203,7 @@ curl -s https://proxy.killa.cc/api/v1/vpn/delete \
 
 <mark style="color:$success;">`GET`</mark> `/vpn/info`
 
-### **Параметры запроса (query)**
+### **Параметры запроса**
 
 | Name                                               | Type   | Description                   |
 | -------------------------------------------------- | ------ | ----------------------------- |
