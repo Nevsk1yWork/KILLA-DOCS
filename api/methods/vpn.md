@@ -406,12 +406,12 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/hwid/quote" \
 
 ### Тело запроса
 
-| Name            | Type   | Description                                                                                                                        |
-| --------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| telegram\_id\*  | int    | Telegram ID конечного клиента                                                                                                      |
-| client\_key\*   | string | Ключ клиента у реселлера                                                                                                           |
-| uuid\*          | string | UUID подписки                                                                                                                      |
-| target\_limit\* | int    | Новый лимит устройств (абсолютное значение). Увеличение возможно только на значения `delta`, которые есть в конфиге (HWID\_PRICE). |
+| Name                                               | Type   | Description                                                                                   |
+| -------------------------------------------------- | ------ | --------------------------------------------------------------------------------------------- |
+| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента                                                                 |
+| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера                                                                      |
+| uuid<mark style="color:$danger;">\*</mark>         | string | UUID подписки                                                                                 |
+| delta<mark style="color:$danger;">\*</mark>        | int    | На сколько увеличить лимит устройств. **Только значения, полученные через** `/vpn/hwid/quote` |
 
 ### Пример
 
@@ -423,7 +423,7 @@ curl -s https://proxy.killa.cc/api/v1/vpn/hwid/increase \
     "telegram_id": 123456789,
     "client_key": "client-001",
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    "target_limit": 7
+    "delta": 2
   }'
 ```
 
@@ -438,12 +438,10 @@ curl -s https://proxy.killa.cc/api/v1/vpn/hwid/increase \
       "client_key": "client-001"
     },
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    "current_limit": 5,
-    "target_limit": 7,
+    "current_limit": 1,
     "delta": 2,
-    "price_rub": 249.0,
-    "charged_rub": 249.0,
-    "applied": true
+    "target_limit": 3,
+    "price_rub": 249
   }
 }
 ```
