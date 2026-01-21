@@ -57,16 +57,10 @@
 
 <mark style="color:$success;">`GET`</mark> `/vpn/quote`
 
-### **Параметры запроса**
-
-| Name                                                 | Type | Description      |
-| ---------------------------------------------------- | ---- | ---------------- |
-| period\_months<mark style="color:$danger;">\*</mark> | int  | Период в месяцах |
-
 ### Пример
 
 ```bash
-curl -s "https://proxy.killa.cc/api/v1/vpn/quote?period_months=1" \
+curl -s "https://proxy.killa.cc/api/v1/vpn/quote" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -76,8 +70,10 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/quote?period_months=1" \
 {
   "ok": true,
   "data": {
-    "period_months": 1,
-    "price_rub": 99.0
+    "1": 129,
+    "3": 349,
+    "6": 649,
+    "12": 999
   }
 }
 ```
@@ -235,6 +231,233 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/info?telegram_id=123456789&client_key
         "trafficLimitBytes": 0
       }
     ]
+  }
+}
+```
+
+## Получить список устройств
+
+<mark style="color:$success;">`GET`</mark> `/vpn/hwid/devices`
+
+### Параметры запроса
+
+| Name                                               | Type   | Description                   |
+| -------------------------------------------------- | ------ | ----------------------------- |
+| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента |
+| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера      |
+| uuid<mark style="color:$danger;">\*</mark>         | string | UUID подписки                 |
+
+### Пример
+
+```bash
+curl -s "https://proxy.killa.cc/api/v1/vpn/hwid/devices?telegram_id=123456789&client_key=client-001&uuid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+### Ответ
+
+```json
+{
+  "ok": true,
+  "data": {
+    "client": {
+      "telegram_id": 123456789,
+      "client_key": "client-001"
+    },
+    "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "device_limit": 5,
+    "connected": 2,
+    "devices": [
+      {
+        "hwid": "abcdef123456",
+        "platform": "android",
+        "osVersion": "14",
+        "deviceModel": "Pixel 8",
+        "userAgent": "v2rayNG/1.8.15",
+        "updatedAt": "2026-01-21T10:15:30.000Z"
+      },
+      {
+        "hwid": "qwerty987654",
+        "platform": "windows",
+        "osVersion": "11",
+        "deviceModel": "PC",
+        "userAgent": "v2rayN/6.50",
+        "updatedAt": "2026-01-21T09:02:10.000Z"
+      }
+    ]
+  }
+}
+```
+
+## Сброс одного устройства
+
+<mark style="color:$success;">`POST`</mark> `/vpn/hwid/reset`
+
+### Тело запроса
+
+| Name                                               | Type   | Description                           |
+| -------------------------------------------------- | ------ | ------------------------------------- |
+| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента         |
+| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера              |
+| uuid<mark style="color:$danger;">\*</mark>         | string | UUID подписки                         |
+| hwid<mark style="color:$danger;">\*</mark>         | string | HWID устройства (из списка устройств) |
+
+### Пример
+
+```bash
+curl -s https://proxy.killa.cc/api/v1/vpn/hwid/reset \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "telegram_id": 123456789,
+    "client_key": "client-001",
+    "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "hwid": "abcdef123456"
+  }'
+```
+
+### Ответ
+
+```json
+{
+  "ok": true,
+  "data": {
+    "client": {
+      "telegram_id": 123456789,
+      "client_key": "client-001"
+    },
+    "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "hwid": "abcdef123456",
+    "deleted": true
+  }
+}
+```
+
+## Cброс всех устройств
+
+<mark style="color:$success;">`POST`</mark> `/vpn/hwid/reset-all`
+
+### Тело запроса
+
+| Name                                               | Type   | Description                   |
+| -------------------------------------------------- | ------ | ----------------------------- |
+| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента |
+| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера      |
+| uuid<mark style="color:$danger;">\*</mark>         | string | UUID подписки                 |
+
+### Пример
+
+```bash
+curl -s https://proxy.killa.cc/api/v1/vpn/hwid/reset-all \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "telegram_id": 123456789,
+    "client_key": "client-001",
+    "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+  }'
+```
+
+### Ответ
+
+```json
+{
+  "ok": true,
+  "data": {
+    "client": {
+      "telegram_id": 123456789,
+      "client_key": "client-001"
+    },
+    "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "deleted_all": true
+  }
+}
+```
+
+## Стоимость увеличения лимита
+
+<mark style="color:$success;">`GET`</mark> `/vpn/hwid/increase/quote`
+
+### Параметры запроса
+
+| Name           | Type   | Description                                                                                    |
+| -------------- | ------ | ---------------------------------------------------------------------------------------------- |
+| telegram\_id\* | int    | Telegram ID конечного клиента                                                                  |
+| client\_key\*  | string | Ключ клиента у реселлера                                                                       |
+| uuid\*         | string | UUID подписки                                                                                  |
+| delta\*        | int    | На сколько устройств увеличить лимит (значения из конфига, например: `1`, `2`, `3`, `5`, `10`) |
+
+### Пример
+
+```bash
+curl -s "https://proxy.killa.cc/api/v1/vpn/hwid/increase/quote?telegram_id=123456789&client_key=client-001&uuid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&delta=2" \
+  -H "Authorization: Bearer YOUR_TOKEN"
+```
+
+### Ответ
+
+```json
+{
+  "ok": true,
+  "data": {
+    "client": {
+      "telegram_id": 123456789,
+      "client_key": "client-001"
+    },
+    "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "connected": 2,
+    "current_limit": 5,
+    "delta": 2,
+    "target_limit": 7,
+    "price_rub": 249.0
+  }
+}
+```
+
+## Увеличить лимит устройств
+
+<mark style="color:$success;">`POST`</mark> `/vpn/hwid/increase`
+
+### Тело запроса
+
+| Name            | Type   | Description                                                                                                                        |
+| --------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------- |
+| telegram\_id\*  | int    | Telegram ID конечного клиента                                                                                                      |
+| client\_key\*   | string | Ключ клиента у реселлера                                                                                                           |
+| uuid\*          | string | UUID подписки                                                                                                                      |
+| target\_limit\* | int    | Новый лимит устройств (абсолютное значение). Увеличение возможно только на значения `delta`, которые есть в конфиге (HWID\_PRICE). |
+
+### Пример
+
+```bash
+curl -s https://proxy.killa.cc/api/v1/vpn/hwid/increase \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "telegram_id": 123456789,
+    "client_key": "client-001",
+    "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "target_limit": 7
+  }'
+```
+
+### Ответ
+
+```json
+{
+  "ok": true,
+  "data": {
+    "client": {
+      "telegram_id": 123456789,
+      "client_key": "client-001"
+    },
+    "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "current_limit": 5,
+    "target_limit": 7,
+    "delta": 2,
+    "price_rub": 249.0,
+    "charged_rub": 249.0,
+    "applied": true
   }
 }
 ```
