@@ -37,5 +37,5 @@
 
 ```bash
 curl -s https://proxy.killa.cc/api/v1/balance \
-  -H "Authorization: Bearer YOUR_TOKEN"{% hint style="info" %}
+  -H "Authorization: Bearer YOUR_TOKEN"
 ```

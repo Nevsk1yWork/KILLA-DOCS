@@ -195,7 +195,7 @@ curl -s https://proxy.killa.cc/api/v1/vpn/delete \
 }
 ```
 
-## Получить текущую информацию
+## Получить информацию о пользователе
 
 <mark style="color:$success;">`GET`</mark> `/vpn/info`
 
@@ -376,21 +376,12 @@ curl -s https://proxy.killa.cc/api/v1/vpn/hwid/reset-all \
 
 ## Стоимость увеличения лимита
 
-<mark style="color:$success;">`GET`</mark> `/vpn/hwid/increase/quote`
-
-### Параметры запроса
-
-| Name           | Type   | Description                                                                                    |
-| -------------- | ------ | ---------------------------------------------------------------------------------------------- |
-| telegram\_id\* | int    | Telegram ID конечного клиента                                                                  |
-| client\_key\*  | string | Ключ клиента у реселлера                                                                       |
-| uuid\*         | string | UUID подписки                                                                                  |
-| delta\*        | int    | На сколько устройств увеличить лимит (значения из конфига, например: `1`, `2`, `3`, `5`, `10`) |
+<mark style="color:$success;">`GET`</mark> `/vpn/hwid/quote`
 
 ### Пример
 
 ```bash
-curl -s "https://proxy.killa.cc/api/v1/vpn/hwid/increase/quote?telegram_id=123456789&client_key=client-001&uuid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&delta=2" \
+curl -s "https://proxy.killa.cc/api/v1/vpn/hwid/quote" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -400,16 +391,11 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/hwid/increase/quote?telegram_id=12345
 {
   "ok": true,
   "data": {
-    "client": {
-      "telegram_id": 123456789,
-      "client_key": "client-001"
-    },
-    "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    "connected": 2,
-    "current_limit": 5,
-    "delta": 2,
-    "target_limit": 7,
-    "price_rub": 249.0
+    "1": 149,
+    "2": 249,
+    "3": 349,
+    "5": 499,
+    "10": 799
   }
 }
 ```
