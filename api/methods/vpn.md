@@ -272,23 +272,17 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/hwid/devices?telegram_id=123456789&cl
     },
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "device_limit": 5,
-    "connected": 2,
+    "connected": 1,
     "devices": [
       {
-        "hwid": "abcdef123456",
-        "platform": "android",
-        "osVersion": "14",
-        "deviceModel": "Pixel 8",
-        "userAgent": "v2rayNG/1.8.15",
-        "updatedAt": "2026-01-21T10:15:30.000Z"
-      },
-      {
-        "hwid": "qwerty987654",
-        "platform": "windows",
-        "osVersion": "11",
-        "deviceModel": "PC",
-        "userAgent": "v2rayN/6.50",
-        "updatedAt": "2026-01-21T09:02:10.000Z"
+        "hwid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "userUuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+        "platform": "Windows",
+        "osVersion": "10.0.19045",
+        "deviceModel": "Home-PC_x86_64",
+        "userAgent": "Happ/1.5.2/Windows",
+        "createdAt": "2026-01-21T14:42:27.559Z",
+        "updatedAt": "2026-01-21T14:42:27.558Z"
       }
     ]
   }
