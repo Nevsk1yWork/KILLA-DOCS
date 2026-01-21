@@ -53,11 +53,11 @@
 * **Авторизация:** для каждого запроса передавайте токен в заголовке `Authorization: Bearer <token>`.
 {% endhint %}
 
-## 1) Посчитать стоимость
+## Посчитать стоимость
 
 <mark style="color:$success;">`GET`</mark> `/vpn/quote`
 
-### **Параметры запроса (query)**
+### **Параметры запроса**
 
 | Name                                                 | Type | Description      |
 | ---------------------------------------------------- | ---- | ---------------- |
@@ -82,11 +82,11 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/quote?period_months=1" \
 }
 ```
 
-## 2) Купить
+## Купить
 
 <mark style="color:$success;">`POST`</mark> `/vpn/buy`
 
-### Тело запроса (Request Body)
+### Тело запроса
 
 | Name                                                 | Type   | Description                   |
 | ---------------------------------------------------- | ------ | ----------------------------- |
@@ -121,11 +121,11 @@ curl -s https://proxy.killa.cc/api/v1/api/v1/vpn/buy \
 }
 ```
 
-## 3) Продлить
+## Продлить подписку
 
 <mark style="color:$success;">`POST`</mark> `/vpn/renew`
 
-### Тело запроса (Request Body)
+### Тело запроса
 
 | Name                                                 | Type   | Description                   |
 | ---------------------------------------------------- | ------ | ----------------------------- |
@@ -162,11 +162,11 @@ curl -s https://proxy.killa.cc/api/v1/vpn/renew \
 }
 ```
 
-## 4) Удалить подписку
+## Удалить подписку
 
 <mark style="color:$success;">`POST`</mark> `/vpn/delete`
 
-### Тело запроса (Request Body)
+### Тело запроса
 
 | Name                                               | Type   | Description                   |
 | -------------------------------------------------- | ------ | ----------------------------- |
@@ -199,7 +199,7 @@ curl -s https://proxy.killa.cc/api/v1/vpn/delete \
 }
 ```
 
-## 5) Получить текущую информацию
+## Получить текущую информацию
 
 <mark style="color:$success;">`GET`</mark> `/vpn/info`
 
