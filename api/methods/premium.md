@@ -89,7 +89,7 @@
 | Name                                             | Type   | Description |
 | ------------------------------------------------ | ------ | ----------- |
 | pool\_type<mark style="color:$danger;">\*</mark> | string | Тип пула    |
-| gb<mark style="color:$danger;">\*</mark>         | number | Объём в GB  |
+| gb<mark style="color:$danger;">\*</mark>         | int    | Объём в ГБ  |
 
 ### **Пример**
 
@@ -121,7 +121,7 @@ curl -s "https://proxy.killa.cc/api/v1/premium/traffic/quote?pool_type=residenti
 | Name                                               | Type   | Description                   |
 | -------------------------------------------------- | ------ | ----------------------------- |
 | pool\_type<mark style="color:$danger;">\*</mark>   | string | Тип пула                      |
-| gb<mark style="color:$danger;">\*</mark>           | number | Объём в GB                    |
+| gb<mark style="color:$danger;">\*</mark>           | int    | Объём в ГБ                    |
 | telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента |
 
 ### **Пример**
@@ -148,10 +148,50 @@ curl -s https://proxy.killa.cc/api/v1/premium/traffic/buy \
       "telegram_id": 123456789,
       "pool_type": "residential"
     },
-    "pool_type": "residential",
-    "gb": 10,
     "price_rub": 990.0,
+    "traffic_added_gb": 10,
     "traffic_balance_gb": 10.0
+  }
+}
+```
+
+## Увеличить трафик
+
+<mark style="color:$success;">`POST`</mark> `/premium/traffic/add`
+
+### Параметры запроса
+
+| Name                                              | Type | Description           |
+| ------------------------------------------------- | ---- | --------------------- |
+| subuser\_id<mark style="color:$danger;">\*</mark> | int  | Идентификатор клиента |
+| gb<mark style="color:$danger;">\*</mark>          | int  | Объём в ГБ            |
+
+### Пример
+
+```bash
+curl -s https://proxy.killa.cc/api/v1/premium/traffic/add \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "subuser_id": 12345,
+    "gb": 5
+  }'
+```
+
+### Ответ
+
+```json
+{
+  "ok": true,
+  "data": {
+    "subuser": {
+      "subuser_id": 12345,
+      "telegram_id": 123456789,
+      "pool_type": "residential"
+    },
+    "price_rub": 495.0,
+    "traffic_added_gb": 5,
+    "traffic_balance_gb": 15.0
   }
 }
 ```
