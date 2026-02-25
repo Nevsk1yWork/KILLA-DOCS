@@ -6,16 +6,13 @@
 
 ***
 
-#### **Идентификация клиента (обязательно для всех VPN-методов)**
+#### Идентификация клиента
 
-Все операции выполняются для **клиента реселлера**, а не для владельца токена.
+Клиент (реселлер) идентифицируется **только по API-токену** в заголовке.
 
-Клиент определяется парой:
-
-* `telegram_id` — Telegram ID конечного пользователя.
-* `client_key` — произвольная строка, которую задаёт реселлер (можно писать что угодно: внутренний id, username, email, `user-42` и т.п.).
-
-По паре `telegram_id + client_key` происходит управление. `client_key` можно использовать одинаковым для разных `telegram_id` — важна именно пара.
+* Все операции с подпиской выполняются **только по `uuid`**.
+* Перед любым действием сервер проверяет, что указанный `uuid` **принадлежит именно этому reseller’у**.\
+  Если `uuid` чужой или не существует — возвращается **`404 not_found`** (без утечек информации).
 
 ***
 
@@ -30,11 +27,11 @@
 
 ***
 
-#### UUID подписки (важно для управления)
+#### UUID подписки
 
-У клиента может быть несколько подписок одновременно.
-
-* `GET /vpn/info` возвращает **список** подписок, каждая содержит `uuid`.
+* `uuid` выдаётся **в ответе `/vpn/buy`**.
+* Все дальнейшие действия выполняются **только по `uuid`** (`/vpn/info`, `/vpn/renew`, `/vpn/delete`, HWID-методы).
+* У реселлера может быть несколько подписок — **храните `uuid` у себя** (в своей базе/панели/CRM). Эндпоинта “получить список всех uuid” в API **нет**.
 
 </details>
 
@@ -74,11 +71,9 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/quote" \
 
 ### Тело запроса
 
-| Name                                                 | Type   | Description                                                                                            |
-| ---------------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------ |
-| telegram\_id<mark style="color:$danger;">\*</mark>   | int    | Telegram ID конечного клиента                                                                          |
-| client\_key<mark style="color:$danger;">\*</mark>    | string | Ключ клиента у реселлера                                                                               |
-| period\_months<mark style="color:$danger;">\*</mark> | int    | <p>Период в месяцах.<br><strong>Только значения, полученные через</strong> <code>/vpn/quote</code></p> |
+| Name                                                 | Type | Description                                                                                            |
+| ---------------------------------------------------- | ---- | ------------------------------------------------------------------------------------------------------ |
+| period\_months<mark style="color:$danger;">\*</mark> | int  | <p>Период в месяцах.<br><strong>Только значения, полученные через</strong> <code>/vpn/quote</code></p> |
 
 ### Пример
 
@@ -87,8 +82,6 @@ curl -s https://proxy.killa.cc/api/v1/api/v1/vpn/buy \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "telegram_id": 123456789,
-    "client_key": "client-001",
     "period_months": 1
   }'
 ```
@@ -99,14 +92,12 @@ curl -s https://proxy.killa.cc/api/v1/api/v1/vpn/buy \
 {
   "ok": true,
   "data": {
-    "client": {
-      "telegram_id": 123456789,
-      "client_key": "client-001"
-    },
+    "period_months": 1,
+    "price_rub": 129,
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    "subscriptionUrl": "https://vpn.killa.cc/qwerty12345678",
-    "expireAt": "2027-01-01T00:00:00.000Z",
-    "expireAt_date": "01.01.2027"
+    "subscriptionUrl": "https://....",
+    "expireAt": "2026-03-25T10:00:00.000Z",
+    "expireAt_date": "25.03.2026"
   }
 }
 ```
@@ -119,8 +110,6 @@ curl -s https://proxy.killa.cc/api/v1/api/v1/vpn/buy \
 
 | Name                                                 | Type   | Description                                        |
 | ---------------------------------------------------- | ------ | -------------------------------------------------- |
-| telegram\_id<mark style="color:$danger;">\*</mark>   | int    | Telegram ID конечного клиента                      |
-| client\_key<mark style="color:$danger;">\*</mark>    | string | Ключ клиента у реселлера                           |
 | uuid<mark style="color:$danger;">\*</mark>           | string | UUID подписки                                      |
 | period\_months<mark style="color:$danger;">\*</mark> | int    | **Только значения, полученные через** `/vpn/quote` |
 
@@ -131,8 +120,6 @@ curl -s https://proxy.killa.cc/api/v1/vpn/renew \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "telegram_id": 123456789,
-    "client_key": "client-001",
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "period_months": 3
   }'
@@ -144,14 +131,12 @@ curl -s https://proxy.killa.cc/api/v1/vpn/renew \
 {
   "ok": true,
   "data": {
-    "client": {
-      "telegram_id": 123456789,
-      "client_key": "client-001"
-    },
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    "subscriptionUrl": "https://vpn.killa.cc/qwerty12345678",
-    "expireAt": "2027-04-01T00:00:00.000Z",
-    "expireAt_date": "01.04.2027"
+    "period_months": 3,
+    "price_rub": 349,
+    "subscriptionUrl": "https://....",
+    "expireAt": "2026-06-25T10:00:00.000Z",
+    "expireAt_date": "25.06.2026"
   }
 }
 ```
@@ -162,11 +147,9 @@ curl -s https://proxy.killa.cc/api/v1/vpn/renew \
 
 ### Тело запроса
 
-| Name                                               | Type   | Description                   |
-| -------------------------------------------------- | ------ | ----------------------------- |
-| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента |
-| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера      |
-| uuid<mark style="color:$danger;">\*</mark>         | string | UUID подписки                 |
+| Name                                       | Type   | Description   |
+| ------------------------------------------ | ------ | ------------- |
+| uuid<mark style="color:$danger;">\*</mark> | string | UUID подписки |
 
 ### **Пример**
 
@@ -175,8 +158,6 @@ curl -s https://proxy.killa.cc/api/v1/vpn/delete \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "telegram_id": 123456789,
-    "client_key": "client-001",
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
   }'
 ```
@@ -187,10 +168,6 @@ curl -s https://proxy.killa.cc/api/v1/vpn/delete \
 {
   "ok": true,
   "data": {
-    "client": {
-      "telegram_id": 123456789,
-      "client_key": "client-001"
-    },
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "deleted": true
   }
@@ -203,15 +180,14 @@ curl -s https://proxy.killa.cc/api/v1/vpn/delete \
 
 ### **Параметры запроса**
 
-| Name                                               | Type   | Description                   |
-| -------------------------------------------------- | ------ | ----------------------------- |
-| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента |
-| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера      |
+| Name                                       | Type   | Description   |
+| ------------------------------------------ | ------ | ------------- |
+| uuid<mark style="color:$danger;">\*</mark> | string | UUID подписки |
 
 ### Пример
 
 ```bash
-curl -s "https://proxy.killa.cc/api/v1/vpn/info?telegram_id=123456789&client_key=client-001" \
+curl -s "https://proxy.killa.cc/api/v1/vpn/info?uuid=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
@@ -221,22 +197,13 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/info?telegram_id=123456789&client_key
 {
   "ok": true,
   "data": {
-    "client": {
-      "telegram_id": 123456789,
-      "client_key": "client-001"
-    },
-    "exists": true,
-    "count": 1,
-    "items": [
-      {
-        "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-        "status": "ACTIVE",
-        "expireAt": "2027-01-01T00:00:00.000Z",
-        "expireAt_date": "01.01.2027",
-        "subscriptionUrl": "https://vpn.killa.cc/qwerty12345678",
-        "trafficLimitBytes": 0
-      }
-    ]
+    "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "status": "ACTIVE",
+    "expireAt": "2026-06-25T10:00:00.000Z",
+    "expireAt_date": "25.06.2026",
+    "subscriptionUrl": "https://....",
+    "trafficLimitBytes": 0,
+    "hwidDeviceLimit": 5
   }
 }
 ```
@@ -247,11 +214,9 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/info?telegram_id=123456789&client_key
 
 ### Параметры запроса
 
-| Name                                               | Type   | Description                   |
-| -------------------------------------------------- | ------ | ----------------------------- |
-| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента |
-| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера      |
-| uuid<mark style="color:$danger;">\*</mark>         | string | UUID подписки                 |
+| Name                                       | Type   | Description   |
+| ------------------------------------------ | ------ | ------------- |
+| uuid<mark style="color:$danger;">\*</mark> | string | UUID подписки |
 
 ### Пример
 
@@ -266,10 +231,6 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/hwid/devices?telegram_id=123456789&cl
 {
   "ok": true,
   "data": {
-    "client": {
-      "telegram_id": 123456789,
-      "client_key": "client-001"
-    },
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "device_limit": 5,
     "connected": 1,
@@ -295,12 +256,10 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/hwid/devices?telegram_id=123456789&cl
 
 ### Тело запроса
 
-| Name                                               | Type   | Description                           |
-| -------------------------------------------------- | ------ | ------------------------------------- |
-| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента         |
-| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера              |
-| uuid<mark style="color:$danger;">\*</mark>         | string | UUID подписки                         |
-| hwid<mark style="color:$danger;">\*</mark>         | string | HWID устройства (из списка устройств) |
+| Name                                       | Type   | Description                           |
+| ------------------------------------------ | ------ | ------------------------------------- |
+| uuid<mark style="color:$danger;">\*</mark> | string | UUID подписки                         |
+| hwid<mark style="color:$danger;">\*</mark> | string | HWID устройства (из списка устройств) |
 
 ### Пример
 
@@ -309,8 +268,6 @@ curl -s https://proxy.killa.cc/api/v1/vpn/hwid/reset \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "telegram_id": 123456789,
-    "client_key": "client-001",
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "hwid": "abcdef123456"
   }'
@@ -322,10 +279,6 @@ curl -s https://proxy.killa.cc/api/v1/vpn/hwid/reset \
 {
   "ok": true,
   "data": {
-    "client": {
-      "telegram_id": 123456789,
-      "client_key": "client-001"
-    },
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "hwid": "abcdef123456",
     "deleted": true
@@ -339,11 +292,9 @@ curl -s https://proxy.killa.cc/api/v1/vpn/hwid/reset \
 
 ### Тело запроса
 
-| Name                                               | Type   | Description                   |
-| -------------------------------------------------- | ------ | ----------------------------- |
-| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента |
-| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера      |
-| uuid<mark style="color:$danger;">\*</mark>         | string | UUID подписки                 |
+| Name                                       | Type   | Description   |
+| ------------------------------------------ | ------ | ------------- |
+| uuid<mark style="color:$danger;">\*</mark> | string | UUID подписки |
 
 ### Пример
 
@@ -352,8 +303,6 @@ curl -s https://proxy.killa.cc/api/v1/vpn/hwid/reset-all \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "telegram_id": 123456789,
-    "client_key": "client-001",
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
   }'
 ```
@@ -364,10 +313,6 @@ curl -s https://proxy.killa.cc/api/v1/vpn/hwid/reset-all \
 {
   "ok": true,
   "data": {
-    "client": {
-      "telegram_id": 123456789,
-      "client_key": "client-001"
-    },
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "deleted_all": true
   }
@@ -406,12 +351,10 @@ curl -s "https://proxy.killa.cc/api/v1/vpn/hwid/quote" \
 
 ### Тело запроса
 
-| Name                                               | Type   | Description                                                                                   |
-| -------------------------------------------------- | ------ | --------------------------------------------------------------------------------------------- |
-| telegram\_id<mark style="color:$danger;">\*</mark> | int    | Telegram ID конечного клиента                                                                 |
-| client\_key<mark style="color:$danger;">\*</mark>  | string | Ключ клиента у реселлера                                                                      |
-| uuid<mark style="color:$danger;">\*</mark>         | string | UUID подписки                                                                                 |
-| delta<mark style="color:$danger;">\*</mark>        | int    | На сколько увеличить лимит устройств. **Только значения, полученные через** `/vpn/hwid/quote` |
+| Name                                        | Type   | Description                                                                                   |
+| ------------------------------------------- | ------ | --------------------------------------------------------------------------------------------- |
+| uuid<mark style="color:$danger;">\*</mark>  | string | UUID подписки                                                                                 |
+| delta<mark style="color:$danger;">\*</mark> | int    | На сколько увеличить лимит устройств. **Только значения, полученные через** `/vpn/hwid/quote` |
 
 ### Пример
 
@@ -420,8 +363,6 @@ curl -s https://proxy.killa.cc/api/v1/vpn/hwid/increase \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "telegram_id": 123456789,
-    "client_key": "client-001",
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
     "delta": 2
   }'
@@ -433,14 +374,10 @@ curl -s https://proxy.killa.cc/api/v1/vpn/hwid/increase \
 {
   "ok": true,
   "data": {
-    "client": {
-      "telegram_id": 123456789,
-      "client_key": "client-001"
-    },
     "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    "current_limit": 1,
+    "current_limit": 5,
     "delta": 2,
-    "target_limit": 3,
+    "target_limit": 7,
     "price_rub": 249
   }
 }
